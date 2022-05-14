@@ -11,9 +11,9 @@ const Contacts = () => {
                 <h2 className='text-white text-center text-3xl'>Services We Provide</h2>
             </div>
             <div className='flex flex-col justify-center items-center'>
-                <input type="email" placeholder="Email Address" class="mb-3 input input-bordered w-full max-w-lg" />
-                <input type="text" placeholder="Subject" class="mb-3 input input-bordered w-full max-w-lg" />
-                <textarea placeholder="your Message" class="mb-3 input input-bordered w-full max-w-lg h-28" />
+                <input type="email" placeholder="Email Address" className="mb-3 input input-bordered w-full max-w-lg" />
+                <input type="text" placeholder="Subject" className="mb-3 input input-bordered w-full max-w-lg" />
+                <textarea placeholder="your Message" className="mb-3 input input-bordered w-full max-w-lg h-28" />
                 <OwnButton>Submit</OwnButton>
             </div>
 

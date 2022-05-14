@@ -17,7 +17,7 @@ const Info = () => {
         },
         {
             img: marker,
-            bgColor: 'bg-accent',
+            bgColor: 'bg-neutral',
             title: 'Opening Hours',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, soluta.'
         },
@@ -32,7 +32,7 @@ const Info = () => {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5 px-12'>
-            {infos.map(info=><InfoCard info={info}></InfoCard>)}
+            {infos.map((info,index)=><InfoCard info={info} key={index}></InfoCard>)}
         </div>
     );
 };

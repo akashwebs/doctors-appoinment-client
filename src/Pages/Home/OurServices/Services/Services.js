@@ -32,15 +32,15 @@ const Services = () => {
                 }
             </div>
 
-            <div class="card lg:card-side mt-24 px-12 mx-auto md:px-40">
+            <div className="card lg:card-side mt-24 px-12 mx-auto md:px-40">
                 <figure>
                     <img className='w-96 h-96' src={tretment} alt="Album" style={{objectFit:''}}/>
                 </figure>
-                <div class="pl-0 md:pl-12 flex items-center">
+                <div className="pl-0 md:pl-12 flex items-center">
                     <div>
-                        <h2 class="card-title">Exceptional Dental Care, on Your Terms</h2>
+                        <h2 className="card-title">Exceptional Dental Care, on Your Terms</h2>
                         <p className='my-4'>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsumis that it has a more-or-less normal distribution of letters,as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page</p>
-                        <div class="card-actions">
+                        <div className="card-actions">
                         <OwnButton>Get Started</OwnButton>
                         </div>
                     </div>

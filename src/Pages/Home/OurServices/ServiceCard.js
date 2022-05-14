@@ -5,10 +5,10 @@ const ServiceCard = ({service}) => {
     
     return (
 
-        <div class="card  bg-base-100 shadow-xl pt-4">
+        <div className="card  bg-base-100 shadow-xl pt-4">
             <figure><img src={img} alt="Shoes" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">{name}</h2>
+            <div className="card-body">
+                <h2 className="card-title">{name}</h2>
                 <p>{discription}</p>
                 
             </div>

@@ -7,8 +7,8 @@ import OwnButton from '../../Shared/OwnButton/OwnButton';
 const MakeAppoinment = () => {
     return (
         <div style={{backgroundImage:`url(${appoinment})`}} className='flex justify-center items-center my-24 px-12'>
-            <div className='flex-1'>
-                <img className='mt-[-100px]' src={doctor} alt="" />
+            <div className='flex-1 hidden md:block'>
+                <img className='mt-[-100px] ' src={doctor} alt="" />
             </div>
             <div className='flex-1 text-white'>
                 <h2 className='text-primary'>Appointment</h2>

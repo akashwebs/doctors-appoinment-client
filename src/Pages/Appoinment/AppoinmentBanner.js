@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import chair from '../../assets/images/chair.png'
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { format } from 'date-fns';
 
-const AppoinmentBanner = () => {
-    const [date, setDate]=useState(new Date());
+const AppoinmentBanner = ({date, setDate}) => {
+    
     
     return (
         <div className="hero min-h-screen">
@@ -16,11 +15,10 @@ const AppoinmentBanner = () => {
                     mode='single'
                     selected={date}
                     onSelect={setDate}
-                    footer=<p>You picked {format(date, 'PP')}.</p>
-
                     ></DayPicker>
                 </div>
             </div>
+                   
         </div>
     );
 };

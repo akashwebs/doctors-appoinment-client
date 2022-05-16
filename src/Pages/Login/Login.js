@@ -21,9 +21,7 @@ const Login = () => {
       let from=location.state?.from?.pathname || '/';
       
 
-      if(user || gUser){
-        navigate(from, { replace: true });
-      }
+     
       let errorMessage;
       if(error || gError){
           errorMessage=<p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
@@ -31,7 +29,9 @@ const Login = () => {
       if(loading || gLoading){
           return <Looding></Looding>
       }
-
+      if(user || gUser){
+        navigate(from, { replace: true });
+      }
       
       
 

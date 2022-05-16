@@ -1,15 +1,37 @@
 import React from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import auth from '../../firebase.init';
+import Looding from '../Shared/Looding/Looding';
 
 
 const Login = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
+
+      if(user || gUser){
+
+      }
+      let errorMessage;
+      if(error || gError){
+          errorMessage=<p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
+      }
+      if(loading || gLoading){
+          return <Looding></Looding>
+      }
+
+      
+      
 
     const handleLogin = (data) => {
         console.log(data)
+        signInWithEmailAndPassword(data.email, data.password)
 
     }
 
@@ -73,7 +95,7 @@ const Login = () => {
                                 
                             </label>
                         </div>
-
+                        {errorMessage}
                         <input type="submit" value={'Login'} className='btn w-full max-w-xs' />
                     </form>
 

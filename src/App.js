@@ -15,6 +15,7 @@ import MyReview from './Pages/Dashboard/MyReview';
 import MyHistory from './Pages/Dashboard/MyHistory';
 import Users from './Pages/Dashboard/Users';
 import RequireAdmin from './Pages/Login/RequireAdmin';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
 
 const publicRoute = [
   { path: '/', name: 'Home', Component: 'Home' },
@@ -48,11 +49,9 @@ function App() {
           <Route index  element={<MyAppoinment></MyAppoinment>}></Route>
           <Route path='myreview' element={<MyReview></MyReview>}></Route>
           <Route path='history' element={<MyHistory></MyHistory>}></Route>
-          <Route path='users' element={
-          <RequireAdmin>
-            <Users></Users>
-          </RequireAdmin>
-          }></Route>
+          <Route path='users' element={<RequireAdmin><Users></Users></RequireAdmin>}></Route>
+          <Route path='addDoctor' element={<RequireAdmin><AddDoctor></AddDoctor></RequireAdmin>}></Route>
+
         </Route>
 
       </Routes>

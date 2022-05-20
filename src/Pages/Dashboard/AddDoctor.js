@@ -1,57 +1,17 @@
 import React from 'react';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import auth from '../../firebase.init';
-import useToken from '../../hooks/useToken';
-import Looding from '../Shared/Looding/Looding';
 
-const SignUp = () => {
-    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-      ] = useCreateUserWithEmailAndPassword(auth);
-      const [updateProfile, updating] = useUpdateProfile(auth);
-      const navigate=useNavigate()
-      
-      const [token]=useToken(user || gUser)
-
-      if(token){
-          navigate('/appointment')
-      }
-
-      let errorMessage;
-      if(error || gError){
-          errorMessage=<p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
-      }
-      if(loading || gLoading || updating){
-          return <Looding></Looding>
-      }
-
-      
-      
-
+    
     const handleSignup =async data => {
-        await createUserWithEmailAndPassword(data.email, data.password)
-        await updateProfile({ displayName:data.name });
+    
 
     }
-
-
-    
     
     return (
-        <div className='flex justify-center items-center min-h-screen'>
-        <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body">
-                <h2 className="text-center text-3xl text-accent">Sign Up</h2>
-
-
-                <form onSubmit={handleSubmit(handleSignup)}>
+        <div>
+             <form onSubmit={handleSubmit(handleSignup)}>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text">Your Name</span>
@@ -99,47 +59,31 @@ const SignUp = () => {
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
-                            <span className="label-text">Your Password</span>
+                            <span className="label-text">Specialized</span>
                         </label>
                         <input
-                            type="password"
-                            {...register("password", {
+                            type="text"
+                            {...register("specialized", {
                                 required:{
                                 value: true,
-                                message: 'password is required'
+                                message: 'specialized is required'
                                 },
-                                minLength: {
-                                    value: 6,
-                                    message: 'password should be 6 charecter or longer' 
-                                  }
                             })}
-                            placeholder="Type password"
+                            placeholder="Type specialized"
                             className="input input-bordered w-full max-w-xs" />
                         <label className="label">
-                        {errors.password?.type === 'minLength' && <span className="text-red-500 label-text-alt">{errors.password.message}</span> }
-                        {errors.password?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.password.message}</span> }
+                       
+                        {errors.specialized?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.specialized.message}</span> }
                             
                             
                         </label>
                     </div>
-                    {errorMessage}
-                    <input type="submit" value={'Sign Up'} className='btn uppercase w-full max-w-xs' />
-                    <p className='mt-2'><small>Already have an account? 
-                        <Link to={'/login'} className="text-secondary">Please Login</Link></small></p>
+    
+                    <input type="submit" value={'Add Doctor'} className='btn uppercase w-full max-w-xs' />
+                  
                 </form>
-
-                <div className="divider">OR</div>
-
-                <div className="card-actions justify-center">
-                    <button
-                        className="btn btn-outline"
-                        onClick={() => signInWithGoogle()}
-                    >Google</button>
-                </div>
-            </div>
         </div>
-    </div>
     );
 };
 
-export default SignUp;
+export default AddDoctor;

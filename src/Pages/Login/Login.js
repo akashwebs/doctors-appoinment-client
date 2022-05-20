@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import Looding from '../Shared/Looding/Looding';
 
 
@@ -14,31 +15,35 @@ const Login = () => {
         user,
         loading,
         error,
-      ] = useSignInWithEmailAndPassword(auth);
+    ] = useSignInWithEmailAndPassword(auth);
 
-      const location=useLocation()
-      const navigate=useNavigate()
-      let from=location.state?.from?.pathname || '/';
-      
+    const location = useLocation()
+    const navigate = useNavigate()
+    let from = location.state?.from?.pathname || '/';
+    const [token]=useToken(user || gUser)
+    useEffect(() => {
+        if(token){
+            navigate(from, { replace: true });
+          }
+    }, [token])
 
-     
-      let errorMessage;
-      if(error || gError){
-          errorMessage=<p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
-      }
-      if(loading || gLoading){
-          return <Looding></Looding>
-      }
-      if(user || gUser){
-        navigate(from, { replace: true });
-      }
-      
-      
+    let errorMessage;
+    if (error || gError) {
+        errorMessage = <p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
+    }
+    if (loading || gLoading) {
+        return <Looding></Looding>
+    }
+
+
+   
+
+
 
     const handleLogin = data => {
-      
+
         signInWithEmailAndPassword(data.email, data.password)
-         
+
 
     }
 
@@ -59,22 +64,22 @@ const Login = () => {
                             <input
                                 type="email"
                                 {...register("email", {
-                                    required:{
-                                    value: true,
-                                    message: 'email is required'
+                                    required: {
+                                        value: true,
+                                        message: 'email is required'
                                     },
                                     pattern: {
                                         value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                                        message: 'invalid email' 
+                                        message: 'invalid email'
                                     }
                                 })}
                                 placeholder="Type Email"
                                 className="input input-bordered w-full max-w-xs" />
                             <label className="label">
-                            {errors.email?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.email.message}</span> }
-                            {errors.email?.type === 'pattern' && <span className="text-red-500 label-text-alt">{errors.email.message}</span> }
-                                
-                                
+                                {errors.email?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.email.message}</span>}
+                                {errors.email?.type === 'pattern' && <span className="text-red-500 label-text-alt">{errors.email.message}</span>}
+
+
                             </label>
                         </div>
                         <div className="form-control w-full max-w-xs">
@@ -84,22 +89,22 @@ const Login = () => {
                             <input
                                 type="password"
                                 {...register("password", {
-                                    required:{
-                                    value: true,
-                                    message: 'password is required'
+                                    required: {
+                                        value: true,
+                                        message: 'password is required'
                                     },
                                     minLength: {
                                         value: 6,
-                                        message: 'password should be 6 charecter or longer' 
-                                      }
+                                        message: 'password should be 6 charecter or longer'
+                                    }
                                 })}
                                 placeholder="Type password"
                                 className="input input-bordered w-full max-w-xs" />
                             <label className="label">
-                            {errors.password?.type === 'minLength' && <span className="text-red-500 label-text-alt">{errors.password.message}</span> }
-                            {errors.password?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.password.message}</span> }
-                                
-                                
+                                {errors.password?.type === 'minLength' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
+                                {errors.password?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
+
+
                             </label>
                         </div>
                         {errorMessage}

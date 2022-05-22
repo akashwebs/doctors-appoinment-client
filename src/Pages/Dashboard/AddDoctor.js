@@ -1,17 +1,56 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Looding from '../Shared/Looding/Looding';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { data: services, isLoading } = useQuery('doctorService',()=>fetch('http://localhost:5000/services').then(res => res.json()))
+    const { data: services, isLoading } = useQuery('doctorService', () => fetch('http://localhost:5000/services').then(res => res.json()))
 
+    const imgStorageKey = 'febc399f961b044059b4991efae82ff8';
 
     const handleSignup = async data => {
         console.log(data)
+        const image = data.photo[0];
+        const formData = new FormData();
+        formData.append('image', image)
 
+        const url = `https://api.imgbb.com/1/upload?key=${imgStorageKey}`
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    const imgUrl = result.data.url;
+                    const doctor = {
+                        name: data.name,
+                        email: data.email,
+                        speciality: data.specialized,
+                        img: imgUrl
+                    }
+
+                    fetch('http://localhost:5000/doctor', {
+                        method: "POST",
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `Beaarer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(doctor)
+                    })
+                        .then(res => res.json())
+                        .then(inserted => {
+                            if (inserted.insertedId) {
+                                toast.success('doctor add successfully added')
+                            } else {
+                                toast.error('Faild added doctor')
+                            }
+                        })
+
+                }
+            })
     }
     if (isLoading) {
         return <Looding></Looding>
@@ -78,13 +117,28 @@ const AddDoctor = () => {
                                 {service?.name}
                             </option>)
                         }
-                      
+
                     </select>
 
+
+                </div>
+
+                <div className="form-control w-full max-w-xs">
                     <label className="label">
+                        <span className="label-text">Doctor photo</span>
+                    </label>
+                    <input
+                        type="file"
+                        {...register("photo", {
+                            required: {
+                                value: true,
+                                message: 'photo is required'
+                            }
 
-
-
+                        })}
+                        className="input input-bordered w-full max-w-xs" />
+                    <label className="label">
+                        {errors.photo?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.photo.message}</span>}
 
                     </label>
                 </div>
